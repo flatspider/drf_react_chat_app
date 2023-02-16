@@ -14,6 +14,7 @@ class Chat(models.Model):
         return self.text
 
 
-class Channel(models.Model):
-    users = models.ForeignKey(Chat.author)
+# class Channel(models.Model):
+    # users = models.ForeignKey(
+     #   Chat, on_delete=models.CASCADE, blank=True)
     # conversation = will contain many different chats?
