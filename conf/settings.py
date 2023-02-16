@@ -41,6 +41,13 @@ INSTALLED_APPS = [
 
 
     # Third party applications
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+    'rest_framework',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 
 
     # Local applications
@@ -52,6 +59,21 @@ INSTALLED_APPS = [
 
 
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # KEEP for now for the browserable api
+        'rest_framework.authentication.SessionAuthentication',
+        # for token based implemenation in react
+        # CHECK YOUR BROWSER for the correct cookie
+        # Log in and log out to force Django to reset the CSRF token
+        # Sometimes running localhost doesn't work.
+        'rest_framework.authentication.TokenAuthentication'
+    ]
+
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
