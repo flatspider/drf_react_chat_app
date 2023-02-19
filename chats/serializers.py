@@ -1,0 +1,12 @@
+from rest_framework import serializers
+
+from .models import Chat
+
+
+class ChatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chat
+        # fields = '__all__' # '__all__'This returns all of the fields. Not very secure.
+        # This is a TOOPLE. tuple. Not mutable.
+        fields = ('id', 'text', 'author', 'channel',)
+        # There is also an excludes. Set excludes = and pass through the field you do NOT want display.

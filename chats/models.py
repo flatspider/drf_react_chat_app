@@ -8,7 +8,7 @@ from django.db import models
 class Chat(models.Model):
     text = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
-    # channel = models.ImageField(upload_to="books", null=True)
+    channel = models.CharField(max_length=255)
 
     def __str__(self):
         return self.text
