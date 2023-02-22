@@ -1,6 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import FullForm from "./components/FullForm.js";
+import ChannelList from "./components/ChannelList";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           Learn React
         </a>
         <FullForm />
+        <ChannelList />
       </header>
     </div>
   );

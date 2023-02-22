@@ -14,9 +14,9 @@ from django.shortcuts import render
 
 from rest_framework import generics
 
-from .models import Chat
+from .models import Chat, Channel
 
-from .serializers import ChatSerializer
+from .serializers import ChatSerializer, ChannelSerializer
 
 from django.shortcuts import get_object_or_404
 
@@ -31,3 +31,11 @@ class ChatListAPIView(generics.ListCreateAPIView):
     queryset = Chat.objects.all()
     # The rest framework needs a serializer.
     serializer_class = ChatSerializer
+
+
+class ChannelListAPIView(generics.ListCreateAPIView):
+    queryset = Channel.objects.all()
+    serializer_class = ChannelSerializer
+
+    # def perform_create(self, serializer):
+    #   serializer.save(user=self.request.user)

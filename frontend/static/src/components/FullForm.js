@@ -1,25 +1,76 @@
 import { useState } from "react";
+import ChannelList from "./ChannelList";
 
-function FullForm({ onSubmit }) {
+const INITIAL_CHANNELS = [
+  {
+    title: "Robots",
+    chats: [{ text: "hello", user: "conor" }],
+  },
+  {
+    title: "Jobs",
+    chats: [
+      { text: "I need a job", user: "conor" },
+      { text: "I'm hiring!", user: "jeff" },
+    ],
+  },
+  {
+    title: "Cars",
+    chats: [
+      {
+        text: "I love my 2005 Toyota Corolla - Sport Edition. Anyone else?",
+        user: "conor",
+      },
+    ],
+  },
+
+  {
+    title: "Ethics",
+    chats: [
+      {
+        text: "I have this trolley...",
+        user: "conor",
+      },
+    ],
+  },
+];
+
+function FullForm() {
   const [chatValue, setChatValue] = useState(""); // Use state to set the initial value to empty string.
+  const [channelList, setChannelList] = useState(INITIAL_CHANNELS);
+  const [newChannel, setNewChannel] = useState("");
 
   const handleSubmit = (submits) => {
     submits.preventDefault(); // Stops the button from refreshing the page.
     console.log(submits);
-    onSubmit({ chatValue }); // Pull in the values of image and caption that the user typed.
-    // const newImage = {url, caption}; url: url, and caption: caption
-    // using onSubmit destructuring to call the handleSubmit function on the image board.
-    // onSubmit(newImage); This uses my function to read the image.
 
-    // Make post request to http://127.0.0.1:8000/api_v1/chats/ info.
-    // Where do I get the channels info?
-    // Where do I get user value from?
+    const additionalChannel = {
+      title: newChannel,
+      chats: [{ text: chatValue, user: "you" }],
+    };
 
+    setChannelList([...channelList, additionalChannel]);
+    setNewChannel("");
     setChatValue(""); // Clears the input box.
   };
 
+  const channelListHTML = channelList.map((channel, index) => (
+    <ChannelList key={index} channel={channel} />
+  ));
+
+  console.log(channelListHTML);
+
   return (
     <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="text"
+        className="form-control chatValue"
+        id="chatValue"
+        autoComplete="off"
+        placeholder="Enter channel here..."
+        value={newChannel}
+        onChange={(event) => setNewChannel(event.target.value)} // This watches each change to the input and returns the current value
+      ></input>
       <input
         type="text"
         name="text"
@@ -33,7 +84,6 @@ function FullForm({ onSubmit }) {
       <button type="submit" className="btn btn-primary">
         Submit Chat
       </button>
-      {/* Prevent default behavior on the button */}
     </form>
   );
 }
