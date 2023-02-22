@@ -29,8 +29,8 @@ from django.shortcuts import get_object_or_404
 class ChatListAPIView(generics.ListCreateAPIView):
     # Go to the Book table and get all of the objects.
     queryset = Chat.objects.all()
-    # The rest framework needs a serializer.
     serializer_class = ChatSerializer
+    # The rest framework needs a serializer.
 
 
 class ChannelListAPIView(generics.ListCreateAPIView):

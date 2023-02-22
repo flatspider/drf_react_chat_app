@@ -2,6 +2,7 @@ from django.conf import settings
 
 from django.db import models
 
+
 from django.contrib.auth import get_user_model
 
 # Create your models here.
@@ -11,21 +12,18 @@ from django.contrib.auth import get_user_model
 # How do you properly describe that within the Django framework?
 
 
-class Chat(models.Model):
-    text = models.CharField(max_length=255)
-    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.text
-
-
 class Channel(models.Model):
-    users = models.ManyToManyField(
-        get_user_model(), related_name='channels', blank=True, null=True)
-    # conversation = will contain many different chats?
+    title = models.CharField(max_length=255)
+    # users = models.ManyToManyField(get_user_model()) = will contain many different chats?
     # Many users can exist in a single channel. Therefore this should not be a ForeignKey model but instead a
     # ManyToManyField
 
 
-class Author(models.Model):
-    pass
+class Chat(models.Model):
+    text = models.TextField()
+    channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return self.text

@@ -34,6 +34,14 @@ const INITIAL_CHANNELS = [
   },
 ];
 
+// Make the fetch request in this form.
+// Check to see if the user is logged in.
+// If logged in, allow for write access to be performed.
+// Write access means it will read the logged in user token, and assign that as the author.
+// If not, throw error.
+
+//http://127.0.0.1:8000/api_v1/chats/ is where the chat should be posted
+
 function FullForm() {
   const [chatValue, setChatValue] = useState(""); // Use state to set the initial value to empty string.
   const [channelList, setChannelList] = useState(INITIAL_CHANNELS);
@@ -88,7 +96,7 @@ function FullForm() {
           value={chatValue}
           onChange={(event) => setChatValue(event.target.value)} // This watches each change to the input and returns the current value
         ></input>
-        <button type="submit" className="btn btn-primary m-2 h-50">
+        <button type="submit" className="btn btn-primary m-2 h-50 text-nowrap">
           Submit Chat
         </button>
       </form>
