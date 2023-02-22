@@ -160,6 +160,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# Always add this backend when registering dummy emails.
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
 # Static file directories
 # https://docs.djangoproject.com/en/3.1/ref/settings/#staticfiles-dirs
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'frontend/static/build/static'),)
