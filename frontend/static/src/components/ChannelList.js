@@ -27,6 +27,14 @@ function ChannelList({ channel }) {
     setShowModal(false);
   };
 
+  const chatList = channel.chats.map((chat, index) => (
+    <div key={index}>
+      <p>
+        {chat.text} by {chat.user}
+      </p>
+    </div>
+  ));
+
   return (
     <>
       <button
@@ -36,11 +44,16 @@ function ChannelList({ channel }) {
       >
         {channel.title}
       </button>
-      <Modal show={showModal} onHide={closeModal}>
+      <Modal
+        show={showModal}
+        onHide={closeModal}
+        centered
+        dialogClassName="position-absolute bottom-10 end-0 w-75"
+      >
         <Modal.Header closeButton>
           <Modal.Title>{channel.title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{channel.chats}</Modal.Body>
+        <Modal.Body>{chatList}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={closeModal}>
             Close
