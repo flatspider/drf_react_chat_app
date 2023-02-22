@@ -18,6 +18,9 @@ class Channel(models.Model):
     # Many users can exist in a single channel. Therefore this should not be a ForeignKey model but instead a
     # ManyToManyField
 
+    def __str__(self):
+        return self.title
+
 
 class Chat(models.Model):
     text = models.TextField()
