@@ -26,14 +26,15 @@ function ChannelList({ channel }) {
   const closeModal = () => {
     setShowModal(false);
   };
-
-  const chatList = channel.chats.map((chat, index) => (
+  // This is already being mapped...?
+  /* const chatList = channel.texts.map((chat, index) => (
     <div key={index}>
       <p>
-        {chat.text} by {chat.user}
+        {chat.text} by {chat.author}
       </p>
     </div>
   ));
+  */
 
   return (
     <>
@@ -42,7 +43,7 @@ function ChannelList({ channel }) {
         className="list-group-item list-group-item-action w-25"
         onClick={openModal}
       >
-        {channel.title}
+        {channel.channel}
       </button>
       <Modal
         show={showModal}
@@ -53,7 +54,7 @@ function ChannelList({ channel }) {
         <Modal.Header closeButton>
           <Modal.Title>{channel.title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{chatList}</Modal.Body>
+        <Modal.Body>{channel.text}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={closeModal}>
             Close

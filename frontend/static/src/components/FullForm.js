@@ -1,7 +1,4 @@
-import { useState } from "react";
-import ChannelList from "./ChannelList";
-
-const INITIAL_CHANNELS = [
+/*const INITIAL_CHANNELS = [
   {
     title: "Robots",
     chats: [{ text: "hello", user: "conor" }],
@@ -33,6 +30,7 @@ const INITIAL_CHANNELS = [
     ],
   },
 ];
+*/
 
 // Make the fetch request in this form.
 // Check to see if the user is logged in.
@@ -42,9 +40,13 @@ const INITIAL_CHANNELS = [
 
 //http://127.0.0.1:8000/api_v1/chats/ is where the chat should be posted
 
+import { useState, useEffect } from "react";
+import ChannelList from "./ChannelList";
+import Cookies from "js-cookie";
+
 function FullForm() {
   const [chatValue, setChatValue] = useState(""); // Use state to set the initial value to empty string.
-  const [channelList, setChannelList] = useState(INITIAL_CHANNELS);
+  const [channelList, setChannelList] = useState(null);
   const [newChannel, setNewChannel] = useState("");
 
   const handleSubmit = (submits) => {
@@ -59,15 +61,36 @@ function FullForm() {
     // that object.
 
     setChannelList([...channelList, additionalChannel]);
+
+    // Post this new data to the server here.
     setNewChannel("");
     setChatValue(""); // Clears the input box.
   };
 
+  useEffect(() => {
+    const getChats = async () => {
+      // What is the correct URL to use here?
+
+      const response = await fetch("/api_v1/chats/");
+
+      if (!response.ok) {
+        throw new Error("Network request was not OK");
+      }
+
+      const data = await response.json();
+      setChannelList(data);
+      console.log(data);
+    };
+    getChats();
+  }, []);
+
+  if (!channelList) {
+    return <div>Loading ...</div>;
+  }
+
   const channelListHTML = channelList.map((channel, index) => (
     <ChannelList key={index} channel={channel} />
   ));
-
-  console.log(channelListHTML);
 
   return (
     <div className="d-flex justify-content-between">

@@ -12,6 +12,13 @@ from django.shortcuts import render
 # template_name = 'book_list.html'
 
 
+# Instead of filtering based on the react GET request, create additional views.
+
+# At the end of api_v1/POST?access query params
+
+# During your pass in the fetch request, pass in a filter to the query selector.
+
+
 from rest_framework import generics
 
 from .models import Chat, Channel
