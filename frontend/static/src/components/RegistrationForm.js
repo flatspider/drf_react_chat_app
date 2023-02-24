@@ -1,12 +1,13 @@
 import { useState } from "react";
 
-function LoginForm(props) {
+function RegistrationForm(props) {
   // Can create a css object up here:
   // For login button: style={{padding-left: 2.5rem, padding-right: 2.5rem}}
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [password1, setPassword1] = useState("");
+  const [password2, setPassword2] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -14,7 +15,8 @@ function LoginForm(props) {
 
     setUsername("");
     setEmail("");
-    setPassword("");
+    setPassword1("");
+    setPassword2("");
   };
 
   return (
@@ -32,7 +34,7 @@ function LoginForm(props) {
             <form onSubmit={handleSubmit}>
               <div className="divider d-flex align-items-center my-4">
                 <p className="text-center fw-bold mx-3 mb-0">
-                  Chat with your friends today.
+                  This is the registration page!
                 </p>
               </div>
 
@@ -41,7 +43,7 @@ function LoginForm(props) {
                   type="text"
                   id="username"
                   className="form-control form-control-lg"
-                  placeholder="Enter a valid email address"
+                  placeholder="Enter a username..."
                   autoComplete="off"
                   value={username}
                   onChange={(event) => setUsername(event.target.value)}
@@ -53,14 +55,14 @@ function LoginForm(props) {
               <div className="form-outline mb-4">
                 <input
                   type="email"
-                  id="email"
+                  id="email1"
                   className="form-control form-control-lg"
                   placeholder="Enter a valid email address"
                   autoComplete="off"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                 />
-                <label className="form-label" htmlFor="email">
+                <label className="form-label" htmlFor="email1">
                   Email address
                 </label>
               </div>
@@ -68,33 +70,30 @@ function LoginForm(props) {
               <div className="form-outline mb-3">
                 <input
                   type="password"
-                  id="password"
+                  id="password1"
                   className="form-control form-control-lg"
                   placeholder="Enter password"
                   autoComplete="off"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
+                  value={password1}
+                  onChange={(event) => setPassword1(event.target.value)}
                 />
                 <label className="form-label" htmlFor="password">
                   Password
                 </label>
               </div>
-
-              <div className="d-flex justify-content-between align-items-center">
-                <div className="form-check mb-0">
-                  <input
-                    className="form-check-input me-2"
-                    type="checkbox"
-                    value=""
-                    id="remember-me"
-                  />
-                  <label className="form-check-label" htmlFor="remember-me">
-                    Remember me
-                  </label>
-                </div>
-                <a href="#!" className="text-body">
-                  Forgot password?
-                </a>
+              <div className="form-outline mb-3">
+                <input
+                  type="password"
+                  id="password2"
+                  className="form-control form-control-lg"
+                  placeholder="Enter password"
+                  autoComplete="off"
+                  value={password2}
+                  onChange={(event) => setPassword2(event.target.value)}
+                />
+                <label className="form-label" htmlFor="password">
+                  Enter a matching password.
+                </label>
               </div>
 
               <div className="text-center text-lg-start mt-4 pt-2">
@@ -103,18 +102,18 @@ function LoginForm(props) {
                   style={{ paddingLeft: "2.5rem", paddingRight: "2.5rem" }}
                   className="btn btn-primary btn-lg"
                 >
-                  Login
+                  Register
                 </button>
                 <p className="small fw-bold mt-2 pt-1 mb-0">
-                  Don't have an account?{" "}
+                  Already have an account? Click here!{" "}
                   <a
                     href="#!"
                     className="link-danger"
                     onClick={() => {
-                      props.setRender("b");
+                      props.setRender("a");
                     }}
                   >
-                    Register
+                    Log in
                   </a>
                 </p>
               </div>
@@ -131,4 +130,4 @@ function LoginForm(props) {
   );
 }
 
-export default LoginForm;
+export default RegistrationForm;
