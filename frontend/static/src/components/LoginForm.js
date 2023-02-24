@@ -41,27 +41,13 @@ function LoginForm(props) {
                   type="text"
                   id="username"
                   className="form-control form-control-lg"
-                  placeholder="Enter a valid email address"
+                  placeholder="Enter a valid username"
                   autoComplete="off"
                   value={username}
                   onChange={(event) => setUsername(event.target.value)}
                 />
                 <label className="form-label" htmlFor="username">
                   Username
-                </label>
-              </div>
-              <div className="form-outline mb-4">
-                <input
-                  type="email"
-                  id="email"
-                  className="form-control form-control-lg"
-                  placeholder="Enter a valid email address"
-                  autoComplete="off"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                />
-                <label className="form-label" htmlFor="email">
-                  Email address
                 </label>
               </div>
 
@@ -120,11 +106,6 @@ function LoginForm(props) {
               </div>
             </form>
           </div>
-        </div>
-      </div>
-      <div className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
-        <div className="text-white mb-3 mb-md-0">
-          Copyright © 2023. All rights reserved.
         </div>
       </div>
     </section>
