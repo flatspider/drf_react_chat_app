@@ -13,7 +13,7 @@ from django.contrib.auth import get_user_model
 
 
 class Channel(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, db_index=True)
     # users = models.ManyToManyField(get_user_model()) = will contain many different chats?
     # Many users can exist in a single channel. Therefore this should not be a ForeignKey model but instead a
     # ManyToManyField

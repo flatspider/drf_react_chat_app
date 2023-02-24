@@ -51,6 +51,8 @@ function FullForm() {
 
   const handleSubmit = (submits) => {
     submits.preventDefault(); // Stops the button from refreshing the page.
+    // Why am I adding a title, chats?
+    // A
 
     const additionalChannel = {
       title: newChannel,

@@ -36,6 +36,8 @@ function ChannelList({ channel }) {
   ));
   */
 
+  console.log(channel);
+
   return (
     <>
       <button
@@ -43,7 +45,7 @@ function ChannelList({ channel }) {
         className="list-group-item list-group-item-action w-25"
         onClick={openModal}
       >
-        {channel.channel}
+        {channel.channel.title}
       </button>
       <Modal
         show={showModal}
