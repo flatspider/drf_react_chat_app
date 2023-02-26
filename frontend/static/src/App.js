@@ -5,9 +5,10 @@ import FullForm from "./components/FullForm.js";
 import ChannelList from "./components/ChannelList";
 import LoginForm from "./components/LoginForm";
 import RegistrationForm from "./components/RegistrationForm";
+import MessagesForm from "./components/MessagesForm";
 
 function App() {
-  const [render, setRender] = useState("a");
+  const [render, setRender] = useState("d");
 
   return (
     <div className="App">
@@ -20,6 +21,7 @@ function App() {
           <FullForm render={render} setRender={setRender} /> <ChannelList />
         </>
       )}
+      {render === "d" && <MessagesForm render={render} setRender={setRender} />}
     </div>
   );
 }
