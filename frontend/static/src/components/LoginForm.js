@@ -45,6 +45,8 @@ function LoginForm(props) {
     // Set the cookie Authorization the data token:
     Cookies.set("Authorization", `Token ${data}`);
 
+    props.setRender("d");
+
     setUsername("");
     setEmail("");
     setPassword("");

@@ -2,10 +2,22 @@
 // It will also contain the text input and submit button to send a message to the chat.
 
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 function MessagesForm(props) {
   const [chat, setChat] = useState("");
   const [channels, setChannel] = useState("");
+
+  const isAuthenticated = Cookies.get("Authorization") ? true : false;
+
+  if (!isAuthenticated) {
+    //props.setRender("a");
+    return <p>Please log in to view this component.</p>;
+  }
+
+  const setLogOut = () => {
+    Cookies.set("Authorization", 0);
+  };
 
   const sendChat = () => {
     console.log(chat);
@@ -111,6 +123,13 @@ function MessagesForm(props) {
                     }}
                   >
                     Log In
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-info btn-rounded float-end me-2 mt-2"
+                    onClick={setLogOut}
+                  >
+                    Log Out
                   </button>
                 </form>
               </li>
