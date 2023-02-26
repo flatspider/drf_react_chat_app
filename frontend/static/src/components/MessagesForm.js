@@ -10,9 +10,22 @@ function MessagesForm(props) {
 
   const isAuthenticated = Cookies.get("Authorization") ? true : false;
 
+  const handleError = (err) => {
+    console.warn("error!", err);
+  };
+
   if (!isAuthenticated) {
     //props.setRender("a");
-    return <p>Please log in to view this component.</p>;
+    return (
+      <p
+        onClick={() => {
+          props.setRender("a");
+        }}
+        s
+      >
+        Please click here to log in.
+      </p>
+    );
   }
 
   const setLogOut = () => {
@@ -23,6 +36,25 @@ function MessagesForm(props) {
     console.log(chat);
     setChat("");
   };
+  /*
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const response = fetch("/dj-rest-auth/user/", options)
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch(handleError);
+
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  console.log(response);
+  */
 
   return (
     <section style={{ backgroundColor: "#eee" }}>
