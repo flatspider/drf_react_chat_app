@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 function LoginForm(props) {
   // Can create a css object up here:
@@ -8,9 +9,41 @@ function LoginForm(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleError = (err) => {
+    console.warn("error!");
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("submit");
+
+    const user = {
+      username,
+      email: username + "@example.com",
+      password,
+    };
+
+    console.log(user);
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": Cookies.get("csrftoken"),
+      },
+      body: JSON.stringify(user),
+    };
+
+    const response = await fetch("/dj-rest-auth/login/", options).catch(
+      handleError
+    );
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    // Set the cookie Authorization the data token:
+    Cookies.set("Authorization", `Token ${data}`);
 
     setUsername("");
     setEmail("");

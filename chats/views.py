@@ -27,6 +27,8 @@ from .serializers import ChatSerializer, ChannelSerializer
 
 from django.shortcuts import get_object_or_404
 
+from rest_framework.permissions import IsAuthenticated
+
 # Default is setup to allow for GET requests.
 # We need to add additional information in order to add a POST request.
 # Change the generics.ListAPIView to generics.ListCreateAPIView
@@ -35,6 +37,7 @@ from django.shortcuts import get_object_or_404
 
 class ChatListAPIView(generics.ListCreateAPIView):
     # Go to the Book table and get all of the objects.
+    permission_classes = [IsAuthenticated]
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
     # The rest framework needs a serializer.

@@ -5,9 +5,11 @@ import { useState } from "react";
 
 function MessagesForm(props) {
   const [chat, setChat] = useState("");
+  const [channels, setChannel] = useState("");
 
   const sendChat = () => {
     console.log(chat);
+    setChat("");
   };
 
   return (
@@ -92,6 +94,7 @@ function MessagesForm(props) {
                     placeholder="Enter chat here..."
                     onChange={(event) => setChat(event.target.value)}
                     value={chat}
+                    autoComplete="off"
                   ></input>
 
                   <button
