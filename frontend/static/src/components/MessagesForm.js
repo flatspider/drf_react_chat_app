@@ -8,28 +8,46 @@ function MessagesForm(props) {
   const [chat, setChat] = useState("");
   const [channels, setChannel] = useState("");
 
-  const isAuthenticated = Cookies.get("Authorization") ? true : false;
+  let isLoggedIn = Cookies.get("Authorization") ? true : false;
+
+  console.log(isLoggedIn);
 
   const handleError = (err) => {
     console.warn("error!", err);
   };
 
-  if (!isAuthenticated) {
+  if (!isLoggedIn) {
     //props.setRender("a");
     return (
       <p
         onClick={() => {
           props.setRender("a");
         }}
-        s
       >
         Please click here to log in.
       </p>
     );
   }
 
-  const setLogOut = () => {
-    Cookies.set("Authorization", 0);
+  const setLogOut = async () => {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": Cookies.get("csrftoken"),
+      },
+    };
+
+    const response = await fetch("/dj-rest-auth/logout/", options).catch(
+      handleError
+    );
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    Cookies.remove("Authorization");
+    setChat("");
   };
 
   const sendChat = () => {
