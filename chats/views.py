@@ -35,6 +35,11 @@ from rest_framework.permissions import IsAuthenticated
 # This will add the POST ability.
 
 
+# Where is the author being saved?
+# This can be blank=true
+# Go into the serializer and say that this is
+# The perform create method needs to be over ridden. Self.request.user
+
 class ChatListAPIView(generics.ListCreateAPIView):
     # Go to the Book table and get all of the objects.
     permission_classes = [IsAuthenticated]

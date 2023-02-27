@@ -4,7 +4,7 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
 
-function MessagesForm(props) {
+function MessagesForm(props, current_user) {
   const [chat, setChat] = useState("");
   const [channels, setChannel] = useState("");
 
@@ -16,8 +16,9 @@ function MessagesForm(props) {
     console.warn("error!", err);
   };
 
+  console.log(current_user);
+
   if (!isLoggedIn) {
-    //props.setRender("a");
     return (
       <p
         onClick={() => {
@@ -47,7 +48,7 @@ function MessagesForm(props) {
     }
 
     Cookies.remove("Authorization");
-    setChat("");
+    setChat("5");
   };
 
   const sendChat = () => {
@@ -74,13 +75,15 @@ function MessagesForm(props) {
   console.log(response);
   */
 
+  console.log(current_user);
+
   return (
     <section style={{ backgroundColor: "#eee" }}>
       <div className="container py-5 ">
         <div className="row">
           <div className="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
             <h5 className="font-weight-bold mb-3 text-center text-lg-start">
-              {props.render} Choose your channel:
+              {props.render} You are logged in as {current_user.username}:
             </h5>
 
             <div className="card">

@@ -9,10 +9,17 @@ import MessagesForm from "./components/MessagesForm";
 
 function App() {
   const [render, setRender] = useState("d");
+  var current_user;
 
   return (
     <div className="App">
-      {render === "a" && <LoginForm render={render} setRender={setRender} />}
+      {render === "a" && (
+        <LoginForm
+          current_user={current_user}
+          render={render}
+          setRender={setRender}
+        />
+      )}
       {render === "b" && (
         <RegistrationForm render={render} setRender={setRender} />
       )}
@@ -21,7 +28,13 @@ function App() {
           <FullForm render={render} setRender={setRender} /> <ChannelList />
         </>
       )}
-      {render === "d" && <MessagesForm render={render} setRender={setRender} />}
+      {render === "d" && (
+        <MessagesForm
+          render={render}
+          setRender={setRender}
+          current_user={current_user}
+        />
+      )}
     </div>
   );
 }

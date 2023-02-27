@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
 
-function LoginForm(props) {
+function LoginForm(props, current_user) {
   // Can create a css object up here:
   // For login button: style={{padding-left: 2.5rem, padding-right: 2.5rem}}
 
@@ -24,6 +24,9 @@ function LoginForm(props) {
     };
 
     console.log(user);
+
+    current_user = user;
+
     const options = {
       method: "POST",
       headers: {
