@@ -1,22 +1,42 @@
 // This form will contain as many chat items are within the selected channel.
 // It will also contain the text input and submit button to send a message to the chat.
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 
 function MessagesForm(props, current_user) {
   const [chat, setChat] = useState("");
   const [channels, setChannel] = useState("");
+  const [userData, setUserData] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const options = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": Cookies.get("csrftoken"),
+          },
+        };
+        const response = await fetch("/dj-rest-auth/user/", options);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setUserData(data);
+      } catch (error) {
+        handleError(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   let isLoggedIn = Cookies.get("Authorization") ? true : false;
-
-  console.log(isLoggedIn);
 
   const handleError = (err) => {
     console.warn("error!", err);
   };
-
-  console.log(current_user);
 
   if (!isLoggedIn) {
     return (
@@ -55,27 +75,6 @@ function MessagesForm(props, current_user) {
     console.log(chat);
     setChat("");
   };
-  /*
-  const options = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  const response = fetch("/dj-rest-auth/user/", options)
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch(handleError);
-
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-
-  console.log(response);
-  */
-
-  console.log(current_user);
 
   return (
     <section style={{ backgroundColor: "#eee" }}>
@@ -83,7 +82,14 @@ function MessagesForm(props, current_user) {
         <div className="row">
           <div className="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
             <h5 className="font-weight-bold mb-3 text-center text-lg-start">
-              {props.render} You are logged in as {current_user.username}:
+              {
+                //props.render
+              }{" "}
+              You are logged in as{" "}
+              <div>
+                {" "}
+                {userData ? <p>{userData.username}</p> : <p>Loading...</p>}{" "}
+              </div>
             </h5>
 
             <div className="card">
