@@ -7,5 +7,6 @@ from . import views
 urlpatterns = [
 
     path('channels/', views.ChannelListAPIView.as_view()),
+    path('users/', views.UserListAPIView.as_view()),
     path('', views.ChatListAPIView.as_view()),
 ]

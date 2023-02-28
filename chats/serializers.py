@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from django.contrib.auth.models import User
 from .models import Chat, Channel
 
 
@@ -17,3 +17,9 @@ class ChannelSerializer(serializers.ModelSerializer):
         model = Channel
         fields = ('id', 'title',)
         # fields = '__all__' returns all fields
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'first_name', 'last_name')

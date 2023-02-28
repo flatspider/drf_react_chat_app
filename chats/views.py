@@ -13,9 +13,11 @@ from rest_framework import generics
 
 from .models import Chat, Channel
 
-from .serializers import ChatSerializer, ChannelSerializer
+from .serializers import ChatSerializer, ChannelSerializer, UserSerializer
 
 from django.shortcuts import get_object_or_404
+
+from django.contrib.auth.models import User
 
 from rest_framework.permissions import IsAuthenticated
 
@@ -47,3 +49,9 @@ class ChannelListAPIView(generics.ListCreateAPIView):
 
     # def perform_create(self, serializer):
     #   serializer.save(user=self.request.user)
+
+
+class UserListAPIView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

@@ -94,15 +94,18 @@ function MessagesForm(props, current_user) {
 
             <div className="card">
               <div className="card-body">
-                <ul className="list-unstyled mb-0">
+                <ul
+                  className="list-unstyled
+                "
+                >
                   <li
                     className="p-2 border-bottom"
                     style={{ backgroundColor: "#eee" }}
                   >
                     <a href="#!" className="d-flex justify-content-between">
-                      <div className="d-flex flex-row">
+                      <div className="">
                         <div className="pt-1">
-                          <p className="fw-bold mb-0">CHANNEL.TITLE</p>
+                          <p className="fw-bold">CHANNEL.TITLE</p>
                           <p className="small mb-0 text-muted">
                             Possibly return first chat text...
                           </p>
