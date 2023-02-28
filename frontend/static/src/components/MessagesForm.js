@@ -12,6 +12,7 @@ function MessagesForm(props) {
   const [userData, setUserData] = useState("");
   const [currentChannel, setCurrentChannel] = useState(1);
   const [newChat, setNewChat] = useState({
+    id: "",
     text: "",
     author: "",
     channel: "",
@@ -73,7 +74,7 @@ function MessagesForm(props) {
   }, []);
 
   // Calls api to get all current chats in database.
-  // Chats have chat.TEXT, chat.AUTHOR.username, and chat.channel.title
+  // Chats have chat.id, chat.TEXT, chat.AUTHOR.username, and chat.channel.title
   useEffect(() => {
     const fetchData = async () => {
       try {

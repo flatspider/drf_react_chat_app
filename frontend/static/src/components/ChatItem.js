@@ -10,6 +10,10 @@ function ChatItem({ chat, userData }) {
   // If the author === userData OR the user === admin, provide the delete button.
   // If the author === userData, provide the edit button.
 
+  const deleteThisChat = (e) => {
+    console.log("delete", chat.text, chat.id);
+  };
+
   return (
     <li className="d-flex justify-content-between mb-4">
       <div className="card">
@@ -30,7 +34,9 @@ function ChatItem({ chat, userData }) {
             <button className="btn btn-primary m-2">EDIT</button>
           )}
           {(chat.author.id === userData.pk || userData.pk === 1) && (
-            <button className="btn btn-danger m-2">DELETE</button>
+            <button onClick={deleteThisChat} className="btn btn-danger m-2">
+              DELETE
+            </button>
           )}
         </div>
       </div>

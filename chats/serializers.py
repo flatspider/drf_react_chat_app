@@ -22,6 +22,6 @@ class ChatSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Chat
-        fields = ('text', 'author', 'channel',)
+        fields = ('id', 'text', 'author', 'channel',)
 
         # Can also use excludes.
