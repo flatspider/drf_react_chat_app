@@ -76,15 +76,15 @@ function MessagesForm(props, current_user) {
     setChat("");
   };
 
+  // Need to create the channels html.
+  // Need to fix alignment for channel name.
+
   return (
     <section style={{ backgroundColor: "#eee" }}>
       <div className="container py-5 ">
         <div className="row">
           <div className="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
             <h5 className="font-weight-bold mb-3 text-center text-lg-start">
-              {
-                //props.render
-              }{" "}
               You are logged in as{" "}
               <div>
                 {" "}
@@ -102,7 +102,7 @@ function MessagesForm(props, current_user) {
                     <a href="#!" className="d-flex justify-content-between">
                       <div className="d-flex flex-row">
                         <div className="pt-1">
-                          <p className="fw-bold mb-0">CHANNEL NAME</p>
+                          <p className="fw-bold mb-0">CHANNEL.TITLE</p>
                           <p className="small mb-0 text-muted">
                             Possibly return first chat text...
                           </p>

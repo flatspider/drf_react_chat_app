@@ -11,7 +11,7 @@ import Modal from "react-bootstrap/Modal";
 // This function needs to return a list of buttons as HTML that have mapped over the state.
 
 function ChannelList({ channel }) {
-  // Map the blogs.title over the button content.
+  // Map the Channel.title over the button content.
 
   const [showModal, setShowModal] = useState(false);
 
@@ -26,15 +26,6 @@ function ChannelList({ channel }) {
   const closeModal = () => {
     setShowModal(false);
   };
-  // This is already being mapped...?
-  /* const chatList = channel.texts.map((chat, index) => (
-    <div key={index}>
-      <p>
-        {chat.text} by {chat.author}
-      </p>
-    </div>
-  ));
-  */
 
   console.log(channel);
 
@@ -45,7 +36,7 @@ function ChannelList({ channel }) {
         className="list-group-item list-group-item-action w-25"
         onClick={openModal}
       >
-        {channel.channel.title}
+        <p>{channel["channel"]}</p> Hello
       </button>
       <Modal
         show={showModal}

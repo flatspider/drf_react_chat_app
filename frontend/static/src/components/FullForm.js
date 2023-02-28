@@ -1,37 +1,3 @@
-/*const INITIAL_CHANNELS = [
-  {
-    title: "Robots",
-    chats: [{ text: "hello", user: "conor" }],
-  },
-  {
-    title: "Jobs",
-    chats: [
-      { text: "I need a job", user: "conor" },
-      { text: "I'm hiring!", user: "jeff" },
-    ],
-  },
-  {
-    title: "Cars",
-    chats: [
-      {
-        text: "I love my 2005 Toyota Corolla - Sport Edition. Anyone else?",
-        user: "conor",
-      },
-    ],
-  },
-
-  {
-    title: "Ethics",
-    chats: [
-      {
-        text: "I have this trolley...",
-        user: "conor",
-      },
-    ],
-  },
-];
-*/
-
 // Make the fetch request in this form.
 // Check to see if the user is logged in.
 // If logged in, allow for write access to be performed.
@@ -50,9 +16,7 @@ function FullForm() {
   const [newChannel, setNewChannel] = useState("");
 
   const handleSubmit = (submits) => {
-    submits.preventDefault(); // Stops the button from refreshing the page.
-    // Why am I adding a title, chats?
-    // A
+    submits.preventDefault();
 
     const additionalChannel = {
       title: newChannel,
@@ -62,8 +26,9 @@ function FullForm() {
     // Need to access object. If newChannel within the current channelList, add the chat to
     // that object.
 
-    setChannelList([...channelList, additionalChannel]);
+    // Not currently posting chats to the database, only to State.
 
+    setChannelList([...channelList, additionalChannel]);
     // Post this new data to the server here.
     setNewChannel("");
     setChatValue(""); // Clears the input box.

@@ -2,16 +2,6 @@ from django.shortcuts import render
 
 # Create your views here.
 
-
-# from django.shortcuts import render
-# from django.views.generic import ListView
-# from .models import Book
-# Create your views here.
-# class BookListView(ListView):
-#  model = Book
-# template_name = 'book_list.html'
-
-
 # Instead of filtering based on the react GET request, create additional views.
 
 # At the end of api_v1/POST?access query params
@@ -45,6 +35,9 @@ class ChatListAPIView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
     # The rest framework needs a serializer.
 
 
