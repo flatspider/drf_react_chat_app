@@ -8,10 +8,18 @@ import ChatItem from "./ChatItem";
 
 function MessagesForm(props) {
   const [chats, setChats] = useState("");
-  const [newChat, setNewChat] = useState("");
   const [channels, setChannel] = useState("");
   const [userData, setUserData] = useState("");
   const [currentChannel, setCurrentChannel] = useState(1);
+  const [newChat, setNewChat] = useState({
+    text: "",
+    author: "",
+    channel: "",
+  });
+
+  const handleError = (err) => {
+    console.warn("error!", err);
+  };
 
   // Calls dj-rest-auth to learn currently logged in user.
   // Sets userData to logged in user item.
@@ -131,10 +139,6 @@ function MessagesForm(props) {
       <ChatItem key={index} chat={chat} userData={userData} />
     ));
 
-  const handleError = (err) => {
-    console.warn("error!", err);
-  };
-
   // Logs out and triggers re render.
   const setLogOut = async () => {
     const options = {
@@ -158,15 +162,19 @@ function MessagesForm(props) {
   };
 
   const sendChat = () => {
-    // What channel are you operating in?
-    //console.log(chat);
-    //setChat("");
-    console.log("update function");
-  };
+    //console.log(newChat.text);
+    //console.log(currentChannel);
+    //console.log(userData.pk);
 
-  const appendMessage = () => {
-    // Take the text content in the input box.
-    // Take the currently logged in user.
+    // Make a fetch request to POST the data to the api_v1/chats/
+
+    setNewChat((prevState) => ({
+      ...prevState,
+      author: userData.pk,
+      channel: currentChannel,
+    }));
+
+    console.log(newChat);
   };
 
   return (
@@ -231,15 +239,16 @@ function MessagesForm(props) {
                     className="form-control"
                     id="chat"
                     placeholder="Enter chat here..."
-                    onChange={(event) => setNewChat(event.target.value)}
-                    value={newChat}
+                    onChange={(event) => {
+                      newChat.text = event.target.value;
+                    }}
+                    value={newChat.text}
                     autoComplete="off"
                   ></input>
 
                   <button
                     type="submit"
                     className="btn btn-info btn-rounded float-end me-2 mt-2"
-                    onClick={appendMessage}
                   >
                     Send
                   </button>
