@@ -1,13 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
-
-# Instead of filtering based on the react GET request, create additional views.
-
-# At the end of api_v1/POST?access query params
-
-# During your pass in the fetch request, pass in a filter to the query selector.
-
 
 from rest_framework import generics
 
@@ -33,7 +25,6 @@ from rest_framework.permissions import IsAuthenticated
 # The perform create method needs to be over ridden. Self.request.user
 
 class ChatListAPIView(generics.ListCreateAPIView):
-    # Go to the Book table and get all of the objects.
     permission_classes = [IsAuthenticated]
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
@@ -55,3 +46,23 @@ class UserListAPIView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+class ChatDeleteAPIView(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Chat.objects.all()
+    serializer_class = ChatSerializer
+
+
+class ChatDetailAPIView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Chat.objects.all()
+    serializer_class = ChatSerializer
+
+# Create your views here.
+
+# Instead of filtering based on the react GET request, create additional views.
+
+# At the end of api_v1/POST?access query params
+
+# During your pass in the fetch request, pass in a filter to the query selector.

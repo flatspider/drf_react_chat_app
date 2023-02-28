@@ -23,6 +23,7 @@ function MessagesForm(props) {
 
   // Calls dj-rest-auth to learn currently logged in user.
   // Sets userData to logged in user item.
+  // Still need to do this with restructuring. What is the username? userData.username
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -72,6 +73,7 @@ function MessagesForm(props) {
   }, []);
 
   // Calls api to get all current chats in database.
+  // Chats have chat.TEXT, chat.AUTHOR.username, and chat.channel.title
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -134,7 +136,7 @@ function MessagesForm(props) {
 
   // Run a filter on the chats to only show items where current_chat === chat.channel
   const chatListHTML = chats
-    .filter((chats) => chats.channel === currentChannel)
+    .filter((chats) => chats.channel.id === currentChannel)
     .map((chat, index) => (
       <ChatItem key={index} chat={chat} userData={userData} />
     ));
@@ -205,33 +207,6 @@ function MessagesForm(props) {
           <div className="col-md-6 col-lg-7 col-xl-8">
             <ul className="list-unstyled">
               {chatListHTML}
-              <li className="d-flex justify-content-between mb-4">
-                <div className="card">
-                  <div className="card-header d-flex justify-content-between p-3">
-                    <p className="fw-bold mb-0">You</p>
-                  </div>
-                  <div className="card-body">
-                    <p className="mb-0">Channel Text: I love robots</p>
-                  </div>
-                </div>
-              </li>
-
-              <li className="d-flex justify-content-between mb-4">
-                <div className="card">
-                  <div className="card-header d-flex justify-content-between p-3">
-                    <p className="fw-bold mb-0">Jack</p>
-                  </div>
-                  <div className="card-body d-flex">
-                    <p className="mb-0">
-                      Channel Text: Need to add delete and edit buttons
-                    </p>
-                  </div>
-                  <div className="d-flex justify-content-end">
-                    <button className="btn btn-primary m-2">EDIT</button>
-                    <button className="btn btn-danger m-2">DELETE</button>
-                  </div>
-                </div>
-              </li>
 
               <li className="mb-3">
                 <form className="form-outline" onSubmit={sendChat}>

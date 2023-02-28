@@ -15,19 +15,21 @@ function ChatItem({ chat, userData }) {
       <div className="card">
         <div className="card-header d-flex justify-content-between p-3">
           <p className="fw-bold mb-0">
-            {chat.author === userData.pk ? "You!" : chat.author}
-            Author:{chat.author}
-            Logged in:{userData.pk}
+            {chat.author.username === userData.username
+              ? "You!"
+              : chat.author.username}
+            Author:{chat.author.username}
+            Logged in:{userData.username}
           </p>
         </div>
         <div className="card-body">
           <p className="mb-0">{chat.text}</p>
         </div>
         <div className="d-flex justify-content-end">
-          {chat.author === userData.pk && (
+          {chat.author.id === userData.pk && (
             <button className="btn btn-primary m-2">EDIT</button>
           )}
-          {(chat.author === userData.pk || userData.pk === 1) && (
+          {(chat.author.id === userData.pk || userData.pk === 1) && (
             <button className="btn btn-danger m-2">DELETE</button>
           )}
         </div>
