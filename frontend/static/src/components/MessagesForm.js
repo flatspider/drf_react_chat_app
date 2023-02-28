@@ -3,12 +3,18 @@
 
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import ChannelList from "./ChannelList";
+import ChatItem from "./ChatItem";
 
 function MessagesForm(props, current_user) {
-  const [chat, setChat] = useState("");
+  const [chats, setChats] = useState("");
+  const [newChat, setNewChat] = useState("");
   const [channels, setChannel] = useState("");
   const [userData, setUserData] = useState("");
+  const [currentChannel, setCurrentChannel] = useState(2);
 
+  // Calls dj-rest-auth to learn currently logged in user.
+  // Sets userData to logged in user item.
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,6 +37,81 @@ function MessagesForm(props, current_user) {
     };
     fetchData();
   }, []);
+
+  // Calls api_v1 to learn current channels.
+  // Sets channels to list of channel items. ID and TITLE.
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const options = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": Cookies.get("csrftoken"),
+          },
+        };
+        const response = await fetch("/api_v1/chats/channels/", options);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setChannel(data);
+      } catch (error) {
+        handleError(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Calls api to get all current chats in database.
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const options = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": Cookies.get("csrftoken"),
+          },
+        };
+        const response = await fetch("/api_v1/chats/", options);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setChats(data);
+      } catch (error) {
+        handleError(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Prevents undefined error from occuring during initial render
+  if (!channels) {
+    return null;
+  }
+
+  if (!chats) {
+    return null;
+  }
+
+  const channelListHTML = channels.map((channel, index) => (
+    <ChannelList
+      key={index}
+      channel={channel}
+      currentChannel={currentChannel}
+      setCurrentChannel={setCurrentChannel}
+    />
+  ));
+
+  // Run a filter on the chats to only show items where current_chat === chat.channel
+
+  const chatListHTML = chats
+    .filter((chats) => chats.channel === currentChannel)
+    .map((chat, index) => (
+      <ChatItem key={index} chat={chat} currentUser={userData} />
+    ));
 
   let isLoggedIn = Cookies.get("Authorization") ? true : false;
 
@@ -68,12 +149,14 @@ function MessagesForm(props, current_user) {
     }
 
     Cookies.remove("Authorization");
-    setChat("5");
+    setChats("5");
   };
 
   const sendChat = () => {
-    console.log(chat);
-    setChat("");
+    // What channel are you operating in?
+    //console.log(chat);
+    //setChat("");
+    console.log("update function");
   };
 
   // Need to create the channels html.
@@ -98,46 +181,7 @@ function MessagesForm(props, current_user) {
                   className="list-unstyled
                 "
                 >
-                  <li
-                    className="p-2 border-bottom"
-                    style={{ backgroundColor: "#eee" }}
-                  >
-                    <a href="#!" className="d-flex justify-content-between">
-                      <div className="">
-                        <div className="pt-1">
-                          <p className="fw-bold">CHANNEL.TITLE</p>
-                          <p className="small mb-0 text-muted">
-                            Possibly return first chat text...
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li className="p-2 border-bottom">
-                    <a href="#!" className="d-flex justify-content-between">
-                      <div className="d-flex flex-row">
-                        <div className="pt-1">
-                          <p className="fw-bold mb-0">Second channel</p>
-                          <p className="small text-muted">
-                            Lorem ipsum dolor sit.
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-
-                  <li className="p-2">
-                    <a href="#!" className="d-flex justify-content-between">
-                      <div className="d-flex flex-row">
-                        <div className="pt-1">
-                          <p className="fw-bold mb-0">Tim</p>
-                          <p className="small text-muted">
-                            Lorem ipsum dolor sit.
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
+                  {channelListHTML}
                 </ul>
               </div>
             </div>
@@ -145,17 +189,31 @@ function MessagesForm(props, current_user) {
 
           <div className="col-md-6 col-lg-7 col-xl-8">
             <ul className="list-unstyled">
+              {chatListHTML}
               <li className="d-flex justify-content-between mb-4">
                 <div className="card">
                   <div className="card-header d-flex justify-content-between p-3">
-                    <p className="fw-bold mb-0">User Name</p>
+                    <p className="fw-bold mb-0">You</p>
                   </div>
                   <div className="card-body">
+                    <p className="mb-0">Channel Text: I love robots</p>
+                  </div>
+                </div>
+              </li>
+
+              <li className="d-flex justify-content-between mb-4">
+                <div className="card">
+                  <div className="card-header d-flex justify-content-between p-3">
+                    <p className="fw-bold mb-0">Jack</p>
+                  </div>
+                  <div className="card-body d-flex">
                     <p className="mb-0">
-                      Channel Text: Lorem ipsum dolor sit amet, consectetur
-                      adipiscing elit, sed do eiusmod tempor incididunt ut
-                      labore et dolore magna aliqua.
+                      Channel Text: Need to add delete and edit buttons
                     </p>
+                  </div>
+                  <div className="d-flex justify-content-end">
+                    <button className="btn btn-primary m-2">EDIT</button>
+                    <button className="btn btn-danger m-2">DELETE</button>
                   </div>
                 </div>
               </li>
@@ -166,8 +224,8 @@ function MessagesForm(props, current_user) {
                     className="form-control"
                     id="chat"
                     placeholder="Enter chat here..."
-                    onChange={(event) => setChat(event.target.value)}
-                    value={chat}
+                    onChange={(event) => setNewChat(event.target.value)}
+                    value={newChat}
                     autoComplete="off"
                   ></input>
 

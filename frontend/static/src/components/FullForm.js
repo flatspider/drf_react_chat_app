@@ -55,13 +55,9 @@ function FullForm() {
     return <div>Loading ...</div>;
   }
 
-  const channelListHTML = channelList.map((channel, index) => (
-    <ChannelList key={index} channel={channel} />
-  ));
-
   return (
     <div className="d-flex justify-content-between">
-      <div className="p-3"> {channelListHTML}</div>
+      <div className="p-3"> no HTML</div>
       <form
         className="d-flex flex-row bd-highlight align-items-end"
         onSubmit={handleSubmit}

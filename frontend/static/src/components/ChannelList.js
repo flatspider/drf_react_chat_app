@@ -10,14 +10,10 @@ import Modal from "react-bootstrap/Modal";
 
 // This function needs to return a list of buttons as HTML that have mapped over the state.
 
-function ChannelList({ channel }) {
+function ChannelList(props) {
   // Map the Channel.title over the button content.
 
   const [showModal, setShowModal] = useState(false);
-
-  if (!channel) {
-    return null; // Prevents undefined error from occuring during initial render
-  }
 
   const openModal = () => {
     setShowModal(true);
@@ -27,33 +23,23 @@ function ChannelList({ channel }) {
     setShowModal(false);
   };
 
-  console.log(channel);
-
   return (
     <>
-      <button
-        type="button"
-        className="list-group-item list-group-item-action w-25"
-        onClick={openModal}
-      >
-        <p>{channel["channel"]}</p> Hello
-      </button>
-      <Modal
-        show={showModal}
-        onHide={closeModal}
-        centered
-        dialogClassName="position-absolute bottom-10 end-0 w-75"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{channel.title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{channel.text}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={closeModal}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <li className="p-2 border-bottom">
+        <a
+          href="#!"
+          className="d-flex justify-content-between"
+          onClick={() => {
+            props.setCurrentChannel(props.channel.id);
+          }}
+        >
+          <div className="">
+            <div className="pt-1">
+              <p className="fw-bold">{props.channel.title}</p>
+            </div>
+          </div>
+        </a>
+      </li>
     </>
   );
 }
