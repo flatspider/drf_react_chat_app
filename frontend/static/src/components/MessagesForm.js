@@ -6,12 +6,12 @@ import Cookies from "js-cookie";
 import ChannelList from "./ChannelList";
 import ChatItem from "./ChatItem";
 
-function MessagesForm(props, current_user) {
+function MessagesForm(props) {
   const [chats, setChats] = useState("");
   const [newChat, setNewChat] = useState("");
   const [channels, setChannel] = useState("");
   const [userData, setUserData] = useState("");
-  const [currentChannel, setCurrentChannel] = useState(2);
+  const [currentChannel, setCurrentChannel] = useState(1);
 
   // Calls dj-rest-auth to learn currently logged in user.
   // Sets userData to logged in user item.
@@ -96,6 +96,10 @@ function MessagesForm(props, current_user) {
     return null;
   }
 
+  if (!userData) {
+    return null;
+  }
+
   const channelListHTML = channels.map((channel, index) => (
     <ChannelList
       key={index}
@@ -110,7 +114,7 @@ function MessagesForm(props, current_user) {
   const chatListHTML = chats
     .filter((chats) => chats.channel === currentChannel)
     .map((chat, index) => (
-      <ChatItem key={index} chat={chat} currentUser={userData} />
+      <ChatItem key={index} chat={chat} userData={userData} />
     ));
 
   let isLoggedIn = Cookies.get("Authorization") ? true : false;
@@ -131,6 +135,7 @@ function MessagesForm(props, current_user) {
     );
   }
 
+  // Logs out and triggers re render.
   const setLogOut = async () => {
     const options = {
       method: "POST",

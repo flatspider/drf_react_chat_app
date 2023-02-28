@@ -7,8 +7,6 @@
 //http://127.0.0.1:8000/api_v1/chats/ is where the chat should be posted
 
 import { useState, useEffect } from "react";
-import ChannelList from "./ChannelList";
-import Cookies from "js-cookie";
 
 function FullForm() {
   const [chatValue, setChatValue] = useState(""); // Use state to set the initial value to empty string.
