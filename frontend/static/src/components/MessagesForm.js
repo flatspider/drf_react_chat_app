@@ -87,6 +87,20 @@ function MessagesForm(props) {
     fetchData();
   }, []);
 
+  let isLoggedIn = Cookies.get("Authorization") ? true : false;
+
+  if (!isLoggedIn) {
+    return (
+      <p
+        onClick={() => {
+          props.setRender("a");
+        }}
+      >
+        Please click here to log in.
+      </p>
+    );
+  }
+
   // Prevents undefined error from occuring during initial render
   if (!channels) {
     return null;
@@ -100,6 +114,7 @@ function MessagesForm(props) {
     return null;
   }
 
+  // Maps the database of channels to create channel buttons
   const channelListHTML = channels.map((channel, index) => (
     <ChannelList
       key={index}
@@ -110,30 +125,15 @@ function MessagesForm(props) {
   ));
 
   // Run a filter on the chats to only show items where current_chat === chat.channel
-
   const chatListHTML = chats
     .filter((chats) => chats.channel === currentChannel)
     .map((chat, index) => (
       <ChatItem key={index} chat={chat} userData={userData} />
     ));
 
-  let isLoggedIn = Cookies.get("Authorization") ? true : false;
-
   const handleError = (err) => {
     console.warn("error!", err);
   };
-
-  if (!isLoggedIn) {
-    return (
-      <p
-        onClick={() => {
-          props.setRender("a");
-        }}
-      >
-        Please click here to log in.
-      </p>
-    );
-  }
 
   // Logs out and triggers re render.
   const setLogOut = async () => {
@@ -164,8 +164,10 @@ function MessagesForm(props) {
     console.log("update function");
   };
 
-  // Need to create the channels html.
-  // Need to fix alignment for channel name.
+  const appendMessage = () => {
+    // Take the text content in the input box.
+    // Take the currently logged in user.
+  };
 
   return (
     <section style={{ backgroundColor: "#eee" }}>
@@ -237,6 +239,7 @@ function MessagesForm(props) {
                   <button
                     type="submit"
                     className="btn btn-info btn-rounded float-end me-2 mt-2"
+                    onClick={appendMessage}
                   >
                     Send
                   </button>

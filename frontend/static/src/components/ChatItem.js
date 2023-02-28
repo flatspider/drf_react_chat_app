@@ -1,9 +1,6 @@
 // A chat item will contain the text and the name of the user who sent the text item
 
-import { useState } from "react";
-
 function ChatItem({ chat, userData }) {
-  const [permissions, setPermissions] = useState(0);
   // Pass down the channel ID and author. Go through the chats and display the ones that
   // match the channel ID. If the author == the logged in user, provide an EDIT and DELETE button.
   // If user === admin, then provide a delete button on every message.
@@ -30,8 +27,8 @@ function ChatItem({ chat, userData }) {
           {chat.author === userData.pk && (
             <button className="btn btn-primary m-2">EDIT</button>
           )}
-          {permissions === 2 && (
-            <button className="btn btn-primary m-2">DELETE</button>
+          {(chat.author === userData.pk || userData.pk === 1) && (
+            <button className="btn btn-danger m-2">DELETE</button>
           )}
         </div>
       </div>
