@@ -1,5 +1,7 @@
 // A chat item will contain the text and the name of the user who sent the text item
 
+import Cookies from "js-cookie";
+
 function ChatItem({ chat, userData }) {
   // Pass down the channel ID and author. Go through the chats and display the ones that
   // match the channel ID. If the author == the logged in user, provide an EDIT and DELETE button.
@@ -10,8 +12,32 @@ function ChatItem({ chat, userData }) {
   // If the author === userData OR the user === admin, provide the delete button.
   // If the author === userData, provide the edit button.
 
-  const deleteThisChat = (e) => {
+  const handleError = (err) => {
+    console.warn("error!", err);
+  };
+
+  const deleteThisChat = () => {
+    // Make delete request here. To the correct api delete url.
     console.log("delete", chat.text, chat.id);
+
+    const sendDelete = async () => {
+      const options = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": Cookies.get("csrftoken"),
+        },
+      };
+
+      const deleteURL = "/api_v1/chats/delete/" + chat.id + "/";
+
+      const response = await fetch(deleteURL, options).catch(handleError);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+    };
+    sendDelete();
   };
 
   return (
