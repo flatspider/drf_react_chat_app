@@ -1,6 +1,7 @@
 // A chat item will contain the text and the name of the user who sent the text item
 
 import Cookies from "js-cookie";
+import { useState } from "react";
 
 function ChatItem({ chat, userData }) {
   // Pass down the channel ID and author. Go through the chats and display the ones that
@@ -11,6 +12,8 @@ function ChatItem({ chat, userData }) {
 
   // If the author === userData OR the user === admin, provide the delete button.
   // If the author === userData, provide the edit button.
+
+  const [deleted, setDelete] = useState(false);
 
   const handleError = (err) => {
     console.warn("error!", err);
@@ -38,6 +41,7 @@ function ChatItem({ chat, userData }) {
       }
     };
     sendDelete();
+    setDelete(true);
   };
 
   return (
@@ -45,21 +49,17 @@ function ChatItem({ chat, userData }) {
       <div className="card">
         <div className="card-header d-flex justify-content-between p-3">
           <p className="fw-bold mb-0">
-            {chat.author.username === userData.username
-              ? "You!"
-              : chat.author.username}
-            Author:{chat.author.username}
-            Logged in:{userData.username}
+            From: {chat.author === userData.pk ? "You!" : chat.author_name}
           </p>
         </div>
         <div className="card-body">
           <p className="mb-0">{chat.text}</p>
         </div>
         <div className="d-flex justify-content-end">
-          {chat.author.id === userData.pk && (
+          {chat.author === userData.pk && (
             <button className="btn btn-primary m-2">EDIT</button>
           )}
-          {(chat.author.id === userData.pk || userData.pk === 1) && (
+          {(chat.author === userData.pk || userData.pk === 1) && (
             <button onClick={deleteThisChat} className="btn btn-danger m-2">
               DELETE
             </button>

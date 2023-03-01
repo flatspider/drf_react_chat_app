@@ -30,8 +30,7 @@ class ChatListAPIView(generics.ListCreateAPIView):
     serializer_class = ChatSerializer
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-    # The rest framework needs a serializer.
+        serializer.save(author=self.request.user)
 
 
 class ChannelListAPIView(generics.ListCreateAPIView):

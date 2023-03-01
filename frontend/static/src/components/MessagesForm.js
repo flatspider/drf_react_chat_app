@@ -11,12 +11,7 @@ function MessagesForm(props) {
   const [channels, setChannel] = useState("");
   const [userData, setUserData] = useState("");
   const [currentChannel, setCurrentChannel] = useState(1);
-  const [newChat, setNewChat] = useState({
-    id: "",
-    text: "",
-    author: "",
-    channel: "",
-  });
+  const [newChat, setNewChat] = useState({ text: "" });
 
   const handleError = (err) => {
     console.warn("error!", err);
@@ -137,7 +132,7 @@ function MessagesForm(props) {
 
   // Run a filter on the chats to only show items where current_chat === chat.channel
   const chatListHTML = chats
-    .filter((chats) => chats.channel.id === currentChannel)
+    .filter((chats) => chats.channel === currentChannel)
     .map((chat, index) => (
       <ChatItem key={index} chat={chat} userData={userData} />
     ));
@@ -164,20 +159,41 @@ function MessagesForm(props) {
     setChats("5");
   };
 
-  const sendChat = () => {
-    //console.log(newChat.text);
-    //console.log(currentChannel);
-    //console.log(userData.pk);
+  // Do I need to send in a channel object..?
+  // channel: {id: xx, title: xx}
+  // "channel": {
+  // "id": 2,
+  // "title": "Robots"
+  // }
+  const addChat = async (text, channelId) => {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": Cookies.get("csrftoken"),
+      },
+      body: JSON.stringify({
+        text,
+        channel: { id: channelId },
+      }),
+    };
 
-    // Make a fetch request to POST the data to the api_v1/chats/
+    const response = await fetch("/api_v1/chats/", options).catch(handleError);
 
-    setNewChat((prevState) => ({
-      ...prevState,
-      author: userData.pk,
-      channel: currentChannel,
-    }));
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
 
-    console.log(newChat);
+    const chat = await response.json();
+    console.log("New chat added:", chat);
+
+    //return chat;
+  };
+
+  const sendChat = (event) => {
+    const text = newChat.text;
+    const channelId = currentChannel;
+    addChat(text, channelId);
   };
 
   return (
@@ -216,7 +232,7 @@ function MessagesForm(props) {
                     id="chat"
                     placeholder="Enter chat here..."
                     onChange={(event) => {
-                      newChat.text = event.target.value;
+                      setNewChat({ text: event.target.value });
                     }}
                     value={newChat.text}
                     autoComplete="off"

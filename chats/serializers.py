@@ -17,11 +17,15 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ChatSerializer(serializers.ModelSerializer):
-    channel = ChannelSerializer(read_only=True)
-    author = UserSerializer(read_only=True)
+    # channel = ChannelSerializer(read_only=True)
+    channel_title = serializers.ReadOnlyField(source='channel.title')
+    author_name = serializers.ReadOnlyField(source='author.username')
 
     class Meta:
         model = Chat
-        fields = ('id', 'text', 'author', 'channel',)
+        fields = ('id', 'text', 'author', 'author_name',
+                  'channel', 'channel_title')
+        read_only_fields = ('author',)
 
-        # Can also use excludes.
+
+# Can also use excludes.
