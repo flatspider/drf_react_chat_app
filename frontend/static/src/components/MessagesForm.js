@@ -174,7 +174,7 @@ function MessagesForm(props) {
       },
       body: JSON.stringify({
         text,
-        channel: { id: channelId },
+        channel: channelId,
       }),
     };
 
