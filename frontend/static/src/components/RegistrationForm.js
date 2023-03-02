@@ -18,9 +18,6 @@ function RegistrationForm(props) {
     event.preventDefault();
     console.log("submit");
 
-    event.preventDefault();
-    console.log("submit");
-
     const user = {
       username,
       email,
@@ -29,6 +26,7 @@ function RegistrationForm(props) {
     };
 
     console.log(user);
+
     const options = {
       method: "POST",
       headers: {
@@ -46,7 +44,14 @@ function RegistrationForm(props) {
       throw new Error("Network response was not ok");
     }
 
-    const data = await response.json();
+    console.log(response);
+
+    const data = await response;
+
+    // The response is coming back as a big object.
+
+    console.log(data);
+
     // Set the cookie Authorization the data token:
     Cookies.set("Authorization", `Token ${data}`);
 
@@ -54,6 +59,7 @@ function RegistrationForm(props) {
     setEmail("");
     setPassword1("");
     setPassword2("");
+    props.setRender("d");
   };
 
   return (

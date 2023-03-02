@@ -86,6 +86,7 @@ function MessagesForm(props) {
         }
         const data = await response.json();
         setChats(data);
+        console.log(data);
       } catch (error) {
         handleError(error);
       }
@@ -186,14 +187,14 @@ function MessagesForm(props) {
 
     const chat = await response.json();
     console.log("New chat added:", chat);
-
-    //return chat;
+    setChats([...chats, chat]);
   };
 
   const sendChat = (event) => {
     const text = newChat.text;
     const channelId = currentChannel;
     addChat(text, channelId);
+    setNewChat({ text: "" });
   };
 
   return (
@@ -210,7 +211,7 @@ function MessagesForm(props) {
             </h5>
 
             <div className="card">
-              <div className="card-body">
+              <div className="card-body ">
                 <ul
                   className="list-unstyled
                 "
@@ -225,8 +226,11 @@ function MessagesForm(props) {
             <ul className="list-unstyled">
               {chatListHTML}
 
-              <li className="mb-3">
-                <form className="form-outline" onSubmit={sendChat}>
+              <li
+                className="fixed-bottom sticky-bottom"
+                style={{ backgroundColor: "#eee" }}
+              >
+                <form className="form-outline pt-4 pb-4" onSubmit={sendChat}>
                   <input
                     className="form-control"
                     id="chat"
@@ -246,7 +250,7 @@ function MessagesForm(props) {
                   </button>
                   <button
                     type="button"
-                    className="btn btn-info btn-rounded float-end me-2 mt-2"
+                    className="btn btn-info btn-rounded me-2 mt-2"
                     onClick={() => {
                       props.setRender("a");
                     }}
@@ -255,7 +259,7 @@ function MessagesForm(props) {
                   </button>
                   <button
                     type="button"
-                    className="btn btn-info btn-rounded float-end me-2 mt-2"
+                    className="btn btn-info btn-rounded me-2 mt-2"
                     onClick={setLogOut}
                   >
                     Log Out

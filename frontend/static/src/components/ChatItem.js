@@ -45,14 +45,14 @@ function ChatItem({ chat, userData }) {
   };
 
   return (
-    <li className="d-flex justify-content-between mb-4">
-      <div className="card">
+    <li className="d-flex justify-content-stretch mb-4">
+      <div className="card w-100">
         <div className="card-header d-flex justify-content-between p-3">
           <p className="fw-bold mb-0">
             From: {chat.author === userData.pk ? "You!" : chat.author_name}
           </p>
         </div>
-        <div className="card-body">
+        <div className="card-body text-start">
           <p className="mb-0">{chat.text}</p>
         </div>
         <div className="d-flex justify-content-end">

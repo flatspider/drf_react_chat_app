@@ -83,6 +83,7 @@ function LoginForm(props, current_user) {
                   autoComplete="off"
                   value={username}
                   onChange={(event) => setUsername(event.target.value)}
+                  required
                 />
                 <label className="form-label" htmlFor="username">
                   Username
@@ -98,27 +99,11 @@ function LoginForm(props, current_user) {
                   autoComplete="off"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
+                  required
                 />
                 <label className="form-label" htmlFor="password">
                   Password
                 </label>
-              </div>
-
-              <div className="d-flex justify-content-between align-items-center">
-                <div className="form-check mb-0">
-                  <input
-                    className="form-check-input me-2"
-                    type="checkbox"
-                    value=""
-                    id="remember-me"
-                  />
-                  <label className="form-check-label" htmlFor="remember-me">
-                    Remember me
-                  </label>
-                </div>
-                <a href="#!" className="text-body">
-                  Forgot password?
-                </a>
               </div>
 
               <div className="text-center text-lg-start mt-4 pt-2">
@@ -129,6 +114,7 @@ function LoginForm(props, current_user) {
                 >
                   Login
                 </button>
+
                 <p className="small fw-bold mt-2 pt-1 mb-0">
                   Don't have an account?{" "}
                   <a
