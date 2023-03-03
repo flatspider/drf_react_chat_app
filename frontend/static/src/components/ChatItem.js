@@ -53,6 +53,7 @@ function ChatItem({ chat, userData }) {
     };
     saveEditThisChat();
     setEditing(false);
+    chat.text = textUpdate;
   };
 
   // Send put request to /api_v1/chats/  chat.id /
