@@ -64,7 +64,7 @@ function RegistrationForm(props) {
 
   return (
     <section className="vh-100">
-      <div className="container-fluid h-custom">
+      <div className="container-fluid h-custom mt-5">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-md-9 col-lg-6 col-xl-5">
             <img
@@ -90,6 +90,7 @@ function RegistrationForm(props) {
                   autoComplete="off"
                   value={username}
                   onChange={(event) => setUsername(event.target.value)}
+                  required
                 />
                 <label className="form-label" htmlFor="username">
                   Username
@@ -104,6 +105,7 @@ function RegistrationForm(props) {
                   autoComplete="off"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
+                  required
                 />
                 <label className="form-label" htmlFor="email1">
                   Email address
@@ -119,6 +121,7 @@ function RegistrationForm(props) {
                   autoComplete="off"
                   value={password1}
                   onChange={(event) => setPassword1(event.target.value)}
+                  required
                 />
                 <label className="form-label" htmlFor="password">
                   Password
@@ -133,6 +136,7 @@ function RegistrationForm(props) {
                   autoComplete="off"
                   value={password2}
                   onChange={(event) => setPassword2(event.target.value)}
+                  required
                 />
                 <label className="form-label" htmlFor="password">
                   Enter a matching password.

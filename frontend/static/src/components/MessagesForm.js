@@ -199,30 +199,48 @@ function MessagesForm(props) {
 
   return (
     <section style={{ backgroundColor: "#eee" }}>
-      <div className="container py-5 ">
+      <div className="container ">
         <div className="row">
           <div className="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
-            <h5 className="font-weight-bold mb-3 text-center text-lg-start">
-              You are logged in as{" "}
-              <div>
-                {" "}
-                {userData ? <p>{userData.username}</p> : <p>Loading...</p>}{" "}
-              </div>
-            </h5>
-
-            <div className="card">
-              <div className="card-body ">
-                <ul
-                  className="list-unstyled
+            <div className="fixed-top sticky-top pt-5">
+              <div className="card">
+                <div className="card-body ">
+                  <ul
+                    className="list-unstyled mb-0
                 "
-                >
-                  {channelListHTML}
-                </ul>
+                  >
+                    {channelListHTML}
+                  </ul>
+                </div>
+              </div>
+              <div className="card mt-4">
+                <h5 className="font-weight-bold mt-3 text-center">
+                  You are logged in as:{" "}
+                  {userData ? <p>{userData.username}</p> : <p>Loading...</p>}{" "}
+                </h5>
+                <div>
+                  <button
+                    type="button"
+                    className="btn btn-info btn-rounded me-2 mb-2 mt-2"
+                    onClick={() => {
+                      props.setRender("a");
+                    }}
+                  >
+                    Log In
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-info btn-rounded mb-2 me-2 mt-2"
+                    onClick={setLogOut}
+                  >
+                    Log Out
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="col-md-6 col-lg-7 col-xl-8">
+          <div className="col-md-6 col-lg-7 col-xl-8 py-5">
             <ul className="list-unstyled">
               {chatListHTML}
 
@@ -230,7 +248,7 @@ function MessagesForm(props) {
                 className="fixed-bottom sticky-bottom"
                 style={{ backgroundColor: "#eee" }}
               >
-                <form className="form-outline pt-4 pb-4" onSubmit={sendChat}>
+                <form className="form-outline pt-4 pb-5" onSubmit={sendChat}>
                   <input
                     className="form-control"
                     id="chat"
@@ -244,25 +262,9 @@ function MessagesForm(props) {
 
                   <button
                     type="submit"
-                    className="btn btn-info btn-rounded float-end me-2 mt-2"
+                    className="btn btn-info btn-rounded float-end mt-2 mb-2"
                   >
                     Send
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-info btn-rounded me-2 mt-2"
-                    onClick={() => {
-                      props.setRender("a");
-                    }}
-                  >
-                    Log In
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-info btn-rounded me-2 mt-2"
-                    onClick={setLogOut}
-                  >
-                    Log Out
                   </button>
                 </form>
               </li>
