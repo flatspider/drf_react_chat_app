@@ -41,6 +41,7 @@ function LoginForm(props, current_user) {
     );
 
     if (!response.ok) {
+      alert("Incorrect credentials.");
       throw new Error("Network response was not ok");
     }
 

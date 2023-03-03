@@ -12,6 +12,7 @@ function MessagesForm(props) {
   const [userData, setUserData] = useState("");
   const [currentChannel, setCurrentChannel] = useState(1);
   const [newChat, setNewChat] = useState({ text: "" });
+  const [newChan, setNewChan] = useState("");
 
   const handleError = (err) => {
     console.warn("error!", err);
@@ -197,6 +198,35 @@ function MessagesForm(props) {
     setNewChat({ text: "" });
   };
 
+  const clickAddChannelButton = () => {
+    const addChannel = async (channelName) => {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": Cookies.get("csrftoken"),
+        },
+        body: JSON.stringify({
+          title: channelName,
+        }),
+      };
+
+      const response = await fetch("/api_v1/chats/channels/", options).catch(
+        handleError
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const newChannel = await response.json();
+      console.log("New channel added:", newChannel);
+      // What are the current channels?
+      setChannel([...channels, newChannel]);
+    };
+    addChannel(newChan);
+  };
+
   return (
     <section style={{ backgroundColor: "#eee" }}>
       <div className="container ">
@@ -211,6 +241,20 @@ function MessagesForm(props) {
                   >
                     {channelListHTML}
                   </ul>
+                  <input
+                    className="mt-4"
+                    value={newChan}
+                    placeholder="Channel name..."
+                    onChange={(e) => {
+                      setNewChan(e.target.value);
+                    }}
+                  ></input>
+                  <button
+                    className="btn btn-secondary mt-3"
+                    onClick={clickAddChannelButton}
+                  >
+                    + CHANNEL
+                  </button>
                 </div>
               </div>
               <div className="card mt-4">

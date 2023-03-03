@@ -40,6 +40,7 @@ function ChatItem({ chat, userData }) {
         },
         body: JSON.stringify({
           text: textUpdate,
+          channel: chat.channel,
         }),
       };
 
@@ -95,10 +96,10 @@ function ChatItem({ chat, userData }) {
           </p>
         </div>
         <div className="card-body text-start">
-          <p className="mb-0">
+          <span className="mb-0">
             {chat.text}
             {chat.author === userData.pk && editing && (
-              <form>
+              <h1>
                 <input
                   placeholder={chat.text}
                   onChange={(event) => {
@@ -113,9 +114,9 @@ function ChatItem({ chat, userData }) {
                 >
                   Cancel
                 </button>
-              </form>
+              </h1>
             )}
-          </p>
+          </span>
         </div>
         <div className="d-flex justify-content-end">
           {chat.author === userData.pk && !editing && (

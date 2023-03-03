@@ -25,9 +25,9 @@ class ChatSerializer(serializers.ModelSerializer):
         model = Chat
         fields = ('id', 'text', 'author', 'author_name',
                   'channel', 'channel_title')
-        read_only_fields = ('author', 'channel')
+        read_only_fields = ('author',)
 
-
+# Technicall allows author to be changed? May need additional serializer.
 # Can also use excludes.
 # CustomTokenSerializer
 # CustomRegisterSerializer?
