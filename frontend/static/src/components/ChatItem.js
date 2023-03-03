@@ -15,6 +15,7 @@ function ChatItem({ chat, userData }) {
 
   const [deleted, setDelete] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [textUpdate, setTextUpdate] = useState("");
 
   const handleError = (err) => {
     console.warn("error!", err);
@@ -28,13 +29,35 @@ function ChatItem({ chat, userData }) {
     setEditing(true);
   };
 
-  const saveEditThisChat = () => {
-    setEditing(false);
+  const callEditRequest = () => {
+    const saveEditThisChat = async () => {
+      console.log(textUpdate);
+      const options = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": Cookies.get("csrftoken"),
+        },
+        body: JSON.stringify({
+          text: textUpdate,
+        }),
+      };
 
-    // Send put request to /api_v1/chats/  chat.id /
-    // And update state on the text to show that it has been changed.
-    // Does this allow you to edit back to back?
+      const editURL = "/api_v1/chats/" + chat.id + "/";
+
+      const response = await fetch(editURL, options).catch(handleError);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+    };
+    saveEditThisChat();
+    setEditing(false);
   };
+
+  // Send put request to /api_v1/chats/  chat.id /
+  // And update state on the text to show that it has been changed.
+  // Does this allow you to edit back to back?
 
   const deleteThisChat = () => {
     // Make delete request here. To the correct api delete url.
@@ -75,7 +98,13 @@ function ChatItem({ chat, userData }) {
             {chat.text}
             {chat.author === userData.pk && editing && (
               <form>
-                <input placeholder={chat.text}></input>
+                <input
+                  placeholder={chat.text}
+                  onChange={(event) => {
+                    setTextUpdate(event.target.value);
+                  }}
+                  value={textUpdate}
+                ></input>
                 <button
                   onClick={() => {
                     setEditing(false);
@@ -94,7 +123,7 @@ function ChatItem({ chat, userData }) {
             </button>
           )}
           {chat.author === userData.pk && editing && (
-            <button onClick={saveEditThisChat} className="btn btn-primary m-2">
+            <button onClick={callEditRequest} className="btn btn-primary m-2">
               SAVE
             </button>
           )}

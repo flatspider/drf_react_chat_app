@@ -25,7 +25,7 @@ class ChatSerializer(serializers.ModelSerializer):
         model = Chat
         fields = ('id', 'text', 'author', 'author_name',
                   'channel', 'channel_title')
-        read_only_fields = ('author',)
+        read_only_fields = ('author', 'channel')
 
 
 # Can also use excludes.
