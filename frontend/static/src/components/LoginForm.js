@@ -16,15 +16,12 @@ function LoginForm(props, current_user) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("submit");
 
     const user = {
       username,
       email: username + "@example.com",
       password,
     };
-
-    console.log(user);
 
     current_user = user;
 
