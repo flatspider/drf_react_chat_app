@@ -29,3 +29,5 @@ class ChatSerializer(serializers.ModelSerializer):
 
 
 # Can also use excludes.
+# CustomTokenSerializer
+# CustomRegisterSerializer?

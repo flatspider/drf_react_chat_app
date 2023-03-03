@@ -14,6 +14,7 @@ function ChatItem({ chat, userData }) {
   // If the author === userData, provide the edit button.
 
   const [deleted, setDelete] = useState(false);
+  const [editing, setEditing] = useState(false);
 
   const handleError = (err) => {
     console.warn("error!", err);
@@ -23,6 +24,16 @@ function ChatItem({ chat, userData }) {
     // Read the chat id.
     // Take in information from a new input box where the placeholder is the previous text?
     // Or initially fill the value with text? Do not want it to be controlled.
+    console.log("EDIT");
+    setEditing(true);
+  };
+
+  const saveEditThisChat = () => {
+    setEditing(false);
+
+    // Send put request to /api_v1/chats/  chat.id /
+    // And update state on the text to show that it has been changed.
+    // Does this allow you to edit back to back?
   };
 
   const deleteThisChat = () => {
@@ -48,6 +59,7 @@ function ChatItem({ chat, userData }) {
     };
     sendDelete();
     setDelete(true);
+    setEditing(false);
   };
 
   return (
@@ -59,11 +71,32 @@ function ChatItem({ chat, userData }) {
           </p>
         </div>
         <div className="card-body text-start">
-          <p className="mb-0">{chat.text}</p>
+          <p className="mb-0">
+            {chat.text}
+            {chat.author === userData.pk && editing && (
+              <form>
+                <input placeholder={chat.text}></input>
+                <button
+                  onClick={() => {
+                    setEditing(false);
+                  }}
+                >
+                  Cancel
+                </button>
+              </form>
+            )}
+          </p>
         </div>
         <div className="d-flex justify-content-end">
-          {chat.author === userData.pk && (
-            <button className="btn btn-primary m-2">EDIT</button>
+          {chat.author === userData.pk && !editing && (
+            <button onClick={editThisChat} className="btn btn-primary m-2">
+              EDIT
+            </button>
+          )}
+          {chat.author === userData.pk && editing && (
+            <button onClick={saveEditThisChat} className="btn btn-primary m-2">
+              SAVE
+            </button>
           )}
           {(chat.author === userData.pk || userData.pk === 1) && (
             <button onClick={deleteThisChat} className="btn btn-danger m-2">

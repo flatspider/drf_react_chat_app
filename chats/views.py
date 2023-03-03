@@ -53,7 +53,7 @@ class ChatDeleteAPIView(generics.DestroyAPIView):
     serializer_class = ChatSerializer
 
 
-class ChatDetailAPIView(generics.RetrieveAPIView):
+class ChatDetailAPIView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
