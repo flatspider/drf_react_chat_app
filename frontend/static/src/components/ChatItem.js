@@ -25,13 +25,12 @@ function ChatItem({ chat, userData }) {
     // Read the chat id.
     // Take in information from a new input box where the placeholder is the previous text?
     // Or initially fill the value with text? Do not want it to be controlled.
-    console.log("EDIT");
+
     setEditing(true);
   };
 
   const callEditRequest = () => {
     const saveEditThisChat = async () => {
-      console.log(textUpdate);
       const options = {
         method: "PUT",
         headers: {
@@ -63,7 +62,6 @@ function ChatItem({ chat, userData }) {
 
   const deleteThisChat = () => {
     // Make delete request here. To the correct api delete url.
-    console.log("delete", chat.text, chat.id);
 
     const sendDelete = async () => {
       const options = {

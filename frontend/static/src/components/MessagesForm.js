@@ -87,7 +87,6 @@ function MessagesForm(props) {
         }
         const data = await response.json();
         setChats(data);
-        console.log(data);
       } catch (error) {
         handleError(error);
       }
@@ -187,7 +186,7 @@ function MessagesForm(props) {
     }
 
     const chat = await response.json();
-    console.log("New chat added:", chat);
+    //console.log("New chat added:", chat);
     setChats([...chats, chat]);
   };
 
@@ -221,11 +220,11 @@ function MessagesForm(props) {
       }
 
       const newChannel = await response.json();
-      console.log("New channel added:", newChannel);
-      // What are the current channels?
+
       setChannel([...channels, newChannel]);
     };
     addChannel(newChan);
+    setNewChan("");
   };
 
   return (
@@ -237,25 +236,28 @@ function MessagesForm(props) {
               <div className="card">
                 <div className="card-body ">
                   <ul
-                    className="list-unstyled mb-0
+                    className="list-unstyled mb-0 row align-items-center
                 "
                   >
                     {channelListHTML}
+                    <div className="col">
+                      <input
+                        className="mt-4 form-control"
+                        value={newChan}
+                        placeholder="Channel name..."
+                        onChange={(e) => {
+                          setNewChan(e.target.value);
+                        }}
+                        required
+                      ></input>
+                      <button
+                        className="btn btn-secondary mt-3"
+                        onClick={clickAddChannelButton}
+                      >
+                        + CHANNEL
+                      </button>
+                    </div>
                   </ul>
-                  <input
-                    className="mt-4"
-                    value={newChan}
-                    placeholder="Channel name..."
-                    onChange={(e) => {
-                      setNewChan(e.target.value);
-                    }}
-                  ></input>
-                  <button
-                    className="btn btn-secondary mt-3"
-                    onClick={clickAddChannelButton}
-                  >
-                    + CHANNEL
-                  </button>
                 </div>
               </div>
               <div className="card mt-4">
