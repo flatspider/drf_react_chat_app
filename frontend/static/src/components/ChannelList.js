@@ -24,6 +24,8 @@ function ChannelList(props) {
               {props.channel.id === props.currentChannel && (
                 <span className="ml-2">
                   <LeftArrow />
+                  <LeftArrow />
+                  <LeftArrow />
                 </span>
               )}
             </div>

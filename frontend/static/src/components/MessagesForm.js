@@ -192,6 +192,7 @@ function MessagesForm(props) {
   };
 
   const sendChat = (event) => {
+    event.preventDefault();
     const text = newChat.text;
     const channelId = currentChannel;
     addChat(text, channelId);
